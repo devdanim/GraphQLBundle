@@ -63,7 +63,7 @@ class GraphQLExtensionTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    private function loadContainerFromFile($file, $type, array $services = array(), $skipEnvVars = false)
+    protected function loadContainerFromFile($file, $type, array $services = array(), $skipEnvVars = false)
     {
         $container = new ContainerBuilder();
         if ($skipEnvVars && !method_exists($container, 'resolveEnvPlaceholders')) {

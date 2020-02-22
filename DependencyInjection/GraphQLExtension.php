@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class GraphQLExtension extends Extension
 {
-    private $config = [];
+    protected $config = [];
 
     /**
      * {@inheritdoc}
@@ -50,7 +50,7 @@ class GraphQLExtension extends Extension
         $loader->load('services.xml');
     }
 
-    private function getDefaultHeaders()
+    protected function getDefaultHeaders()
     {
         return [
             ['name' => 'Access-Control-Allow-Origin', 'value' => '*'],

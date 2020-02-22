@@ -10,22 +10,22 @@ class ResolveEvent extends GenericEvent
 {
     /**
      * @var Field */
-    private $field;
+    protected $field;
 
     /** @var array */
-    private $astFields;
+    protected $astFields;
     
     /** @var mixed|null */
-    private $resolvedValue;
+    protected $resolvedValue;
 
     /**
      * Constructor.
      *
      * @param FieldInterface $field
-     * @param array $astFields
+     * @param mixed $astFields
      * @param mixed|null $resolvedValue
      */
-    public function __construct(FieldInterface $field, array $astFields, $resolvedValue = null)
+    public function __construct(FieldInterface $field, $astFields, $resolvedValue = null)
     {
         $this->field = $field;
         $this->astFields = $astFields;

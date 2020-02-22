@@ -17,13 +17,13 @@ class DefaultSecurityManager implements SecurityManagerInterface
 {
 
     /** @var bool */
-    private $fieldSecurityEnabled = false;
+    protected $fieldSecurityEnabled = false;
 
     /** @var bool */
-    private $rootOperationSecurityEnabled = false;
+    protected $rootOperationSecurityEnabled = false;
 
     /** @var  AuthorizationCheckerInterface */
-    private $authorizationChecker;
+    protected $authorizationChecker;
 
     public function __construct(AuthorizationCheckerInterface $authorizationChecker, array $guardConfig = [])
     {

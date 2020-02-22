@@ -25,13 +25,13 @@ class Processor extends BaseProcessor
 {
 
     /** @var  LoggerInterface */
-    private $logger;
+    protected $logger;
 
     /** @var  SecurityManagerInterface */
-    private $securityManager;
+    protected $securityManager;
 
     /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    protected $eventDispatcher;
 
     /**
      * Constructor.
@@ -75,7 +75,7 @@ class Processor extends BaseProcessor
         return parent::resolveQuery($query);
     }
 
-    private function dispatchResolveEvent(ResolveEvent $event, $name){
+    protected function dispatchResolveEvent(ResolveEvent $event, $name){
         $major = Kernel::MAJOR_VERSION;
         $minor = Kernel::MINOR_VERSION;
 
@@ -90,12 +90,12 @@ class Processor extends BaseProcessor
     {
         /** @var AstQuery|AstField $ast */
         $arguments = $this->parseArgumentsValues($field, $ast);
-        $astFields = $ast instanceof AstQuery ? $ast->getFields() : [];
+//        $astFields = $ast instanceof AstQuery ? $ast->getFields() : []; // not needed anymore (keywinf)
 
-        $event = new ResolveEvent($field, $astFields);
+        $event = new ResolveEvent($field, $ast); // $astField -> $ast (keywinf)
         $this->dispatchResolveEvent($event, 'graphql.pre_resolve');
 
-        $resolveInfo = $this->createResolveInfo($field, $astFields);
+        $resolveInfo = $this->createResolveInfo($field, $ast); // $astField -> $ast (keywinf)
         $this->assertClientHasFieldAccess($resolveInfo);
 
         if (in_array('Symfony\Component\DependencyInjection\ContainerAwareInterface', class_implements($field))) {
@@ -127,12 +127,12 @@ class Processor extends BaseProcessor
             $result = $field->resolve($parentValue, $arguments, $resolveInfo);
         }
 
-        $event = new ResolveEvent($field, $astFields, $result);
+        $event = new ResolveEvent($field, $ast, $result);
         $this->dispatchResolveEvent($event, 'graphql.post_resolve');
         return $event->getResolvedValue();
     }
 
-    private function assertClientHasOperationAccess(Query $query)
+    protected function assertClientHasOperationAccess(Query $query)
     {
         if ($this->securityManager->isSecurityEnabledFor(SecurityManagerInterface::RESOLVE_ROOT_OPERATION_ATTRIBUTE)
             && !$this->securityManager->isGrantedToOperationResolve($query)
@@ -141,7 +141,7 @@ class Processor extends BaseProcessor
         }
     }
 
-    private function assertClientHasFieldAccess(ResolveInfo $resolveInfo)
+    protected function assertClientHasFieldAccess(ResolveInfo $resolveInfo)
     {
         if ($this->securityManager->isSecurityEnabledFor(SecurityManagerInterface::RESOLVE_FIELD_ATTRIBUTE)
             && !$this->securityManager->isGrantedToFieldResolve($resolveInfo)
@@ -151,7 +151,7 @@ class Processor extends BaseProcessor
     }
 
 
-    private function isServiceReference($resolveFunc)
+    protected function isServiceReference($resolveFunc)
     {
         return is_array($resolveFunc) && count($resolveFunc) == 2 && strpos($resolveFunc[0], '@') === 0;
     }

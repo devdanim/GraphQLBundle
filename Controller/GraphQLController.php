@@ -55,12 +55,12 @@ class GraphQLController extends Controller
         return $response;
     }
 
-    private function createEmptyResponse()
+    protected function createEmptyResponse()
     {
         return new JsonResponse([], 200, $this->getResponseHeaders());
     }
 
-    private function executeQuery($query, $variables)
+    protected function executeQuery($query, $variables)
     {
         /** @var Processor $processor */
         $processor = $this->get('graphql.processor');
@@ -74,7 +74,7 @@ class GraphQLController extends Controller
      *
      * @throws \Exception
      */
-    private function getPayload()
+    protected function getPayload()
     {
         $request = $this->get('request_stack')->getCurrentRequest();
         $query = $request->get('query', null);
@@ -135,7 +135,7 @@ class GraphQLController extends Controller
     /**
      * @throws \Exception
      */
-    private function initializeSchemaService()
+    protected function initializeSchemaService()
     {
         if ($this->container->initialized('graphql.schema')) {
             return;
@@ -149,7 +149,7 @@ class GraphQLController extends Controller
      *
      * @throws \Exception
      */
-    private function makeSchemaService()
+    protected function makeSchemaService()
     {
         if ($this->container->has($this->getSchemaService())) {
             return $this->container->get($this->getSchemaService());
@@ -175,7 +175,7 @@ class GraphQLController extends Controller
     /**
      * @return string
      */
-    private function getSchemaClass()
+    protected function getSchemaClass()
     {
         return $this->getParameter('graphql.schema_class');
     }
@@ -183,7 +183,7 @@ class GraphQLController extends Controller
     /**
      * @return string
      */
-    private function getSchemaService()
+    protected function getSchemaService()
     {
         $serviceName = $this->getParameter('graphql.schema_service');
 
@@ -194,7 +194,7 @@ class GraphQLController extends Controller
         return $serviceName;
     }
 
-    private function getResponseHeaders()
+    protected function getResponseHeaders()
     {
         return $this->getParameter('graphql.response.headers');
     }

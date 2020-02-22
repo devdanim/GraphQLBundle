@@ -48,7 +48,7 @@ class GraphQlCompilerPass implements CompilerPassInterface
      *
      * @throws \Exception
      */
-    private function processSecurityGuard(ContainerBuilder $container)
+    protected function processSecurityGuard(ContainerBuilder $container)
     {
         $guardConfig = $container->getParameter('graphql.security.guard_config');
         $whiteList   = $container->getParameter('graphql.security.white_list');
@@ -71,7 +71,7 @@ class GraphQlCompilerPass implements CompilerPassInterface
      *
      * @throws \Exception
      */
-    private function addListVoter(ContainerBuilder $container, $voterClass, array $list)
+    protected function addListVoter(ContainerBuilder $container, $voterClass, array $list)
     {
         if ($list) {
             $container

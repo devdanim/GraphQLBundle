@@ -16,10 +16,10 @@ abstract class AbstractListVoter extends Voter
 {
 
     /** @var string[] */
-    private $list = [];
+    protected $list = [];
 
     /** @var bool */
-    private $enabled = false;
+    protected $enabled = false;
 
     protected function supports($attribute, $subject)
     {
