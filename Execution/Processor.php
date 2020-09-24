@@ -127,7 +127,7 @@ class Processor extends BaseProcessor
             $result = $field->resolve($parentValue, $arguments, $resolveInfo);
         }
 
-        $event = new ResolveEvent($field, $ast, $result);
+        $event = new ResolveEvent($field, $ast, $result, $parentValue);
         $this->dispatchResolveEvent($event, 'graphql.post_resolve');
         return $event->getResolvedValue();
     }

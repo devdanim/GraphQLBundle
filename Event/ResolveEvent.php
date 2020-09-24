@@ -14,9 +14,12 @@ class ResolveEvent extends GenericEvent
 
     /** @var array */
     protected $astFields;
-    
+
     /** @var mixed|null */
     protected $resolvedValue;
+
+    /** @var mixed|null */
+    protected $parentValue;
 
     /**
      * Constructor.
@@ -24,13 +27,15 @@ class ResolveEvent extends GenericEvent
      * @param FieldInterface $field
      * @param mixed $astFields
      * @param mixed|null $resolvedValue
+     * @param mixed|null $parentValue
      */
-    public function __construct(FieldInterface $field, $astFields, $resolvedValue = null)
+    public function __construct(FieldInterface $field, $astFields, $resolvedValue = null, $parentValue = null)
     {
         $this->field = $field;
         $this->astFields = $astFields;
         $this->resolvedValue = $resolvedValue;
-        parent::__construct('ResolveEvent', [$field, $astFields, $resolvedValue]);
+        $this->parentValue = $parentValue;
+        parent::__construct('ResolveEvent', [$field, $astFields, $resolvedValue, $parentValue]);
     }
 
     /**
@@ -55,7 +60,7 @@ class ResolveEvent extends GenericEvent
 
     /**
      * Returns the resolved value.
-     * 
+     *
      * @return mixed|null
      */
     public function getResolvedValue()
@@ -64,8 +69,18 @@ class ResolveEvent extends GenericEvent
     }
 
     /**
+     * Returns the parent value.
+     *
+     * @return mixed|null
+     */
+    public function getParentValue()
+    {
+        return $this->parentValue;
+    }
+
+    /**
      * Allows the event listener to manipulate the resolved value.
-     * 
+     *
      * @param $resolvedValue
      */
     public function setResolvedValue($resolvedValue)
