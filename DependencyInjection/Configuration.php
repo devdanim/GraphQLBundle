@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('graphql');
         // BC: sf < 5
         if (method_exists($treeBuilder, 'root')) $rootNode = $treeBuilder->root('graphql');
-        else $treeBuilder->getRootNode();
+        else $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
