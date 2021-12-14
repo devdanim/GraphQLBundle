@@ -4,6 +4,7 @@ namespace Youshido\GraphQLBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Youshido\GraphQLBundle\DependencyInjection\Compiler\GraphQlCompilerPass;
@@ -27,7 +28,7 @@ class GraphQLBundle extends Bundle
     }
 
 
-    public function getContainerExtension()
+    public function getContainerExtension(): ?ExtensionInterface
     {
         if (null === $this->extension) {
             $this->extension = new GraphQLExtension();
