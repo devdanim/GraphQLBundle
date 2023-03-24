@@ -209,7 +209,7 @@ class GraphQLController extends AbstractController
         return $this->getParameter('graphql.response.headers');
     }
 
-    protected function getParameter(string $name)
+    protected function getParameter(string $name): array|bool|string|int|float|\UnitEnum|null
     {
         return $this->params->get($name);
     }
