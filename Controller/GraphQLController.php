@@ -46,7 +46,7 @@ class GraphQLController extends AbstractController
             );
         }
 
-        if ($this->get('request_stack')->getCurrentRequest()->getMethod() == 'OPTIONS') {
+        if ($this->container->get('request_stack')->getCurrentRequest()->getMethod() == 'OPTIONS') {
             return $this->createEmptyResponse();
         }
 
@@ -73,7 +73,7 @@ class GraphQLController extends AbstractController
     protected function executeQuery($query, $variables)
     {
         /** @var Processor $processor */
-        $processor = $this->get('graphql.processor');
+        $processor = $this->container->get('graphql.processor');
         $processor->processPayload($query, $variables);
 
         return $processor->getResponseData();
@@ -86,7 +86,7 @@ class GraphQLController extends AbstractController
      */
     protected function getPayload()
     {
-        $request = $this->get('request_stack')->getCurrentRequest();
+        $request = $this->container->get('request_stack')->getCurrentRequest();
         $query = $request->get('query', null);
         $variables = $request->get('variables', []);
         $isMultiQueryRequest = false;
@@ -161,7 +161,7 @@ class GraphQLController extends AbstractController
      */
     protected function makeSchemaService()
     {
-        if ($this->container->has($this->getSchemaService())) {
+        if ($this->getSchemaService() && $this->container->has($this->getSchemaService())) {
             return $this->container->get($this->getSchemaService());
         }
 
