@@ -197,7 +197,7 @@ class GraphQLController extends AbstractController
     {
         $serviceName = $this->getParameter('graphql.schema_service');
 
-        if (substr($serviceName, 0, 1) === '@') {
+        if (substr($serviceName ?: '', 0, 1) === '@') {
             return substr($serviceName, 1, strlen($serviceName) - 1);
         }
 
