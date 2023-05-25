@@ -59,13 +59,13 @@ class Processor extends BaseProcessor
         return $this;
     }
 
-    public function processPayload($payload, $variables = [], $reducers = [])
+    public function processPayload($payload, $variables = [], $reducers = [], bool $debug = false)
     {
         if ($this->logger) {
             $this->logger->debug(sprintf('GraphQL query: %s', $payload), (array)$variables);
         }
 
-        parent::processPayload($payload, $variables);
+        parent::processPayload($payload, $variables, $debug);
     }
 
     protected function resolveQuery(Query $query)
