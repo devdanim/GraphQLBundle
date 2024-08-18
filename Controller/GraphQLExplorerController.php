@@ -14,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class GraphQLExplorerController extends Controller
 {
     /**
-     * @Route("/graphql/explorer")
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function explorerAction()

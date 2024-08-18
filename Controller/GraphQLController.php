@@ -28,8 +28,6 @@ class GraphQLController extends AbstractController
     }
 
     /**
-     * @Route("/graphql")
-     *
      * @throws \Exception
      *
      * @return JsonResponse
