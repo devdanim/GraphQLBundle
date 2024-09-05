@@ -32,7 +32,7 @@ class GraphQLController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function defaultAction()
+    public function defaultAction(?\Closure $executeQuery = null)
     {
         try {
             $this->initializeSchemaService();
@@ -50,8 +50,8 @@ class GraphQLController extends AbstractController
 
         list($queries, $isMultiQueryRequest) = $this->getPayload();
 
-        $queryResponses = array_map(function($queryData) {
-            return $this->executeQuery($queryData['query'], $queryData['variables']);
+        $queryResponses = array_map(function($queryData) use ($executeQuery) {
+            return $executeQuery ? $executeQuery($queryData['query'], $queryData['variables']) : $this->executeQuery($queryData['query'], $queryData['variables']);
         }, $queries);
 
         $response = new JsonResponse($isMultiQueryRequest ? $queryResponses : $queryResponses[0], 200, $this->getParameter('graphql.response.headers'));
