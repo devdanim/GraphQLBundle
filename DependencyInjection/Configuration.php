@@ -16,12 +16,11 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('graphql');
-        // BC: sf < 5
-        if (method_exists($treeBuilder, 'root')) $rootNode = $treeBuilder->root('graphql');
-        else $rootNode = $treeBuilder->getRootNode();
+        
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

@@ -24,6 +24,7 @@ class GraphQLExtension extends Extension
         $configuration = new Configuration();
         $this->config  = $this->processConfiguration($configuration, $configs);
 
+
         $preparedHeaders = [];
         $headers         = $this->config['response']['headers'] ? $this->config['response']['headers'] : $this->getDefaultHeaders();
         foreach ($headers as $header) {
