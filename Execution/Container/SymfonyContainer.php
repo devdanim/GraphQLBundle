@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is a part of PhpStorm project.
  *
@@ -8,25 +9,21 @@
 
 namespace Youshido\GraphQLBundle\Execution\Container;
 
+use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Youshido\GraphQL\Execution\Container\ContainerInterface;
 
-class SymfonyContainer implements ContainerInterface, ContainerAwareInterface
+
+class SymfonyContainer
 {
-    use ContainerAwareTrait;
+
+    public function __construct(private SymfonyContainerInterface $container) {}
 
     public function get($id)
     {
         return $this->container->get($id);
     }
 
-    public function set($id, $value)
-    {
-        $this->container->set($id, $value);
-        return $this;
-    }
+
 
     public function remove($id)
     {
@@ -67,5 +64,4 @@ class SymfonyContainer implements ContainerInterface, ContainerAwareInterface
     {
         return $this->container;
     }
-
 }

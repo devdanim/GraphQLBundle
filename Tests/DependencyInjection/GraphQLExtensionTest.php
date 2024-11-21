@@ -2,16 +2,16 @@
 
 namespace Youshido\GraphQLBundle\Tests\DependencyInjection;
 
-
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass;
+use Symfony\Component\DependencyInjection\Compiler\ResolveChildDefinitionsPass; 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Youshido\GraphQLBundle\DependencyInjection\GraphQLExtension;
 
-class GraphQLExtensionTest extends \PHPUnit_Framework_TestCase
+class GraphQLExtensionTest extends TestCase
 {
     public function testDefaultConfigIsUsed()
     {
@@ -66,9 +66,6 @@ class GraphQLExtensionTest extends \PHPUnit_Framework_TestCase
     protected function loadContainerFromFile($file, $type, array $services = array(), $skipEnvVars = false)
     {
         $container = new ContainerBuilder();
-        if ($skipEnvVars && !method_exists($container, 'resolveEnvPlaceholders')) {
-            $this->markTestSkipped('Runtime environment variables has been introduced in the Dependency Injection version 3.2.');
-        }
         $container->setParameter('kernel.debug', false);
         $container->setParameter('kernel.cache_dir', '/tmp');
         foreach ($services as $id => $service) {
@@ -92,10 +89,10 @@ class GraphQLExtensionTest extends \PHPUnit_Framework_TestCase
         }
 
         $loader->load($file.'.'.$type);
-        $container->getCompilerPassConfig()->setOptimizationPasses(array(
-            new ResolveDefinitionTemplatesPass(),
-        ));
-        $container->getCompilerPassConfig()->setRemovingPasses(array());
+        $container->getCompilerPassConfig()->setOptimizationPasses([
+            new ResolveChildDefinitionsPass(),
+        ]);
+        $container->getCompilerPassConfig()->setRemovingPasses([]);
         $container->compile();
         return $container;
     }
