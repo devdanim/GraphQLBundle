@@ -35,9 +35,7 @@
         </service>
 
         <service id="graphql.symfony_container_bridge" class="Youshido\GraphQLBundle\Execution\Container\SymfonyContainer">
-            <call method="setContainer">
-                <argument type="service" id="service_container" />
-            </call>
+            <argument type="service" id="service_container" />
         </service>
 
         <service id="graphql.security_manager" class="%graphql.security_manager.class%" lazy="true">

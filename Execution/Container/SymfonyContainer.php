@@ -9,13 +9,17 @@
 namespace Youshido\GraphQLBundle\Execution\Container;
 
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Youshido\GraphQL\Execution\Container\ContainerInterface;
+use Psr\Container\ContainerInterface as PsrContainerInterface;
 
-class SymfonyContainer implements ContainerInterface, ContainerAwareInterface
+class SymfonyContainer implements ContainerInterface
 {
-    use ContainerAwareTrait;
+    protected $container;
+
+    public function __construct(PsrContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     public function get($id)
     {

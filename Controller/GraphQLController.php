@@ -18,7 +18,7 @@ use Youshido\GraphQLBundle\Execution\Processor;
 
 class GraphQLController extends AbstractController
 {
-    protected $container;
+    protected ContainerInterface $container;
     protected $params;
 
     public function __construct(ContainerInterface $container, ParameterBagInterface $params)
